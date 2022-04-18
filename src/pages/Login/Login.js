@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import auth from '../../firebase.init';
 import { useSignInWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import logo from '../../images/google-logo.png';
 const Login = () => {
     const [
@@ -12,6 +12,9 @@ const Login = () => {
     const [signInWithGoogle, googleLoading, googleRrror] = useSignInWithGoogle(auth);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    let navigate = useNavigate();
+    let location = useLocation();
+    let from = location.state?.from?.pathname || "/";
     const handleEmailBlur = event => {
         setEmail(event.target.value);
     }
@@ -23,6 +26,13 @@ const Login = () => {
         signInWithEmailAndPassword(email, password)
             .then(() => {
                 event.target.reset();
+                navigate(from, { replace: true });
+            })
+    }
+    const handleGoogleSignIn = () => {
+        signInWithGoogle()
+            .then(() => {
+                navigate(from, { replace: true });
             })
     }
     return (
@@ -49,7 +59,7 @@ const Login = () => {
                 </div>
             </form>
             <div className=' d-flex justify-content-center'>
-                <button onClick={() => signInWithGoogle()} className='p-2 btn border'>
+                <button onClick={() => handleGoogleSignIn()} className='p-2 btn border'>
                     <img src={logo} width='50px' height='50px' alt="" />
                 </button>
             </div>
