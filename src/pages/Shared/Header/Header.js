@@ -11,7 +11,7 @@ const Header = () => {
         <header className=''>
             <Navbar collapseOnSelect expand="lg" variant="dark">
                 <Container>
-                    <Navbar.Brand href="#home">Ash-Shifa Hijama Services</Navbar.Brand>
+                    <Navbar.Brand href="/">Ash-Shifa Hijama Services</Navbar.Brand>
                     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                     <Navbar.Collapse id="responsive-navbar-nav">
                         <Nav className="me-auto">

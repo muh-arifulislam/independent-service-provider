@@ -51,9 +51,12 @@ const Login = () => {
     const handleResetPasswordToast = async () => {
         setDisplayToast(true)
     }
-    const handleResetPassword = () => {
+    const handleResetPassword = async () => {
         if (email) {
-            sendPasswordResetEmail(email)
+            await sendPasswordResetEmail(email);
+            setDisplayToast(false);
+            alert('reset email sent');
+
         }
         else {
             setError('enter email then clicked on reset password')
