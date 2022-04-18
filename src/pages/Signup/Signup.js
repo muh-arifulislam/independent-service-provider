@@ -42,7 +42,7 @@ const Signup = () => {
 
     }
     return (
-        <div className='border w-50 d-flex flex-column jutify-content-center align-items-center p-3 mt-5 mx-auto'>
+        <div className='border d-flex flex-column jutify-content-center align-items-center p-3 my-5 mx-auto login-container'>
             <form onSubmit={handleSubmit} className='w-100 p-5'>
                 <h2 className='text-center'>Please Sign up!</h2>
                 <div className="mb-3">

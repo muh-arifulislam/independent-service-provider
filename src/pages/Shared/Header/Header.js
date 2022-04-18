@@ -8,7 +8,7 @@ import './Header.css';
 const Header = () => {
     const [user, loading, error] = useAuthState(auth, { onUserChanged: true });
     return (
-        <header>
+        <header className=''>
             <Navbar collapseOnSelect expand="lg" variant="dark">
                 <Container>
                     <Navbar.Brand href="#home">Ash-Shifa Hijama Services</Navbar.Brand>
@@ -16,7 +16,6 @@ const Header = () => {
                     <Navbar.Collapse id="responsive-navbar-nav">
                         <Nav className="me-auto">
                             <Link className='nav-item' to='/'>Home</Link>
-                            <Link className='nav-item' to='home#services'>Services</Link>
                             <Link className='nav-item' to='/checkout'>Checkout</Link>
                             <Link className='nav-item' to='/blog'>Blog</Link>
                             <Link className='nav-item' to='/about'>About</Link>

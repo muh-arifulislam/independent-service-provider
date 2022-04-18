@@ -3,31 +3,34 @@ import auth from '../../firebase.init';
 import { useSignInWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import logo from '../../images/google-logo.png';
+import './Login.css';
 const Login = () => {
-    const [
-        signInWithEmailAndPassword,
-        loading,
-        error,
-    ] = useSignInWithEmailAndPassword(auth);
-    const [signInWithGoogle, googleLoading, googleRrror] = useSignInWithGoogle(auth);
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    // previous page 
     let navigate = useNavigate();
     let location = useLocation();
     let from = location.state?.from?.pathname || "/";
+    // sign in with email and password 
+    const [
+        signInWithEmailAndPassword,
+        user,
+        loading,
+        error,
+    ] = useSignInWithEmailAndPassword(auth);
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
     const handleEmailBlur = event => {
         setEmail(event.target.value);
     }
     const handlePasswordBlur = event => {
         setPassword(event.target.value);
     }
-    const handleSubmit = event => {
+    const handleSubmit = async event => {
         event.preventDefault();
         signInWithEmailAndPassword(email, password)
-            .then(() => {
 
-            })
     }
+    // sign in with google 
+    const [signInWithGoogle, googleLoading, googleRrror] = useSignInWithGoogle(auth);
     const handleGoogleSignIn = () => {
         signInWithGoogle()
             .then(() => {
@@ -35,7 +38,7 @@ const Login = () => {
             })
     }
     return (
-        <div className='border w-50 d-flex flex-column jutify-content-center align-items-center p-3 my-5 mx-auto'>
+        <div className='login-container border d-flex flex-column jutify-content-center align-items-center p-3 my-5 mx-auto '>
             <form onSubmit={handleSubmit} className='w-100 p-5'>
                 <h2 className='text-center'>Please Login!</h2>
                 <div className="mb-3">
@@ -48,7 +51,9 @@ const Login = () => {
                 </div>
                 <div>
                     <p>Don't you have any account? <Link to='/signup'>create</Link> account</p>
-                    <p>{error?.message}</p>
+                </div>
+                <div>
+                    <p className='text-center text-danger'>{error && error.message}</p>
                 </div>
                 <button type="submit" className="btn btn-primary">Login</button>
                 <div className='d-flex justify-content-center mt-2'>

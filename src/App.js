@@ -11,7 +11,7 @@ import RequireAuth from './pages/RequireAuth/RequireAuth';
 import Footer from './pages/Shared/Footer/Footer';
 function App() {
   return (
-    <div>
+    <div className='App'>
       <Header></Header>
       <Routes>
         <Route path='/' element={<Home></Home>}></Route>
