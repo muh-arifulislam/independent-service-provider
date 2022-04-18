@@ -65,6 +65,7 @@ const Login = () => {
     }
     return (
         <div className='login-container border d-flex flex-column jutify-content-center align-items-center p-3 my-5 mx-auto '>
+            {/* password reset toast  */}
             {
                 displayToast && <div>
                     <Toast>
@@ -78,6 +79,7 @@ const Login = () => {
                     </Toast>
                 </div>
             }
+            {/* login with email and password  */}
             <form onSubmit={handleSubmit} className='w-100 p-5'>
                 <h2 className='text-center'>Please Login!</h2>
                 <div className="mb-3">
@@ -88,10 +90,12 @@ const Login = () => {
                     <label className="form-label">Password</label>
                     <input onBlur={handlePasswordBlur} type="password" className="form-control" id="exampleInputPassword1" required />
                 </div>
+                {/* new account create and password reset  */}
                 <div>
                     <p>Don't you have any account? <Link to='/signup'>create</Link> account</p>
                     <p>Forgotten you password? <span onClick={handleResetPasswordToast} className='reset-btn'>reset password</span></p>
                 </div>
+                {/* error messages  */}
                 <div>
                     <p className='text-center text-danger'>{error && error}</p>
                 </div>
@@ -102,6 +106,7 @@ const Login = () => {
                     <div className='w-25'> <hr /></div>
                 </div>
             </form>
+            {/* login with google  */}
             <div className=' d-flex justify-content-center'>
                 <button onClick={() => handleGoogleSignIn()} className='p-2 btn border'>
                     <img src={logo} width='50px' height='50px' alt="" />
