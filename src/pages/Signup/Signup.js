@@ -1,9 +1,14 @@
 import { updateProfile } from 'firebase/auth';
 import React, { useState } from 'react';
 import { useCreateUserWithEmailAndPassword, useSignInWithGoogle, useUpdateProfile } from 'react-firebase-hooks/auth';
+import { useLocation, useNavigate } from 'react-router-dom';
 import auth from '../../firebase.init';
 import logo from '../../images/google-logo.png';
 const Signup = () => {
+    // previous page 
+    let navigate = useNavigate();
+    let location = useLocation();
+    let from = location.state?.from?.pathname || "/";
     const [
         createUserWithEmailAndPassword,
         user,
@@ -15,6 +20,7 @@ const Signup = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [error2, setError2] = useState(false);
     const handleNameBlur = event => {
         setName(event.target.value);
     }
@@ -34,12 +40,18 @@ const Signup = () => {
             console.log('hhh');
             await createUserWithEmailAndPassword(email, password);
             await updateProfile({ displayName: name })
+            await navigate(from, { replace: true });
         }
         else {
-            console.log('pass not maching')
+            setError2(true);
+            event.target.reset();
         }
 
 
+    }
+    const handleSignInWithGoogle = async () => {
+        await signInWithGoogle();
+        await navigate(from, { replace: true });
     }
     return (
         <div className='border d-flex flex-column jutify-content-center align-items-center p-3 my-5 mx-auto login-container'>
@@ -64,6 +76,9 @@ const Signup = () => {
                 <div>
                     <p>{error?.message}</p>
                 </div>
+                <div>
+                    <p className='text-center text-danger'>{error2 && 'Your password do not matched!!!'}</p>
+                </div>
                 <button type="submit" className="btn btn-primary">Sign up</button>
                 <div className='d-flex justify-content-center mt-2'>
                     <div className='w-25'><hr /></div>
@@ -72,7 +87,7 @@ const Signup = () => {
                 </div>
             </form>
             <div className=' d-flex justify-content-center'>
-                <button onClick={() => signInWithGoogle()} className='p-2 btn border'>
+                <button onClick={handleSignInWithGoogle} className='p-2 btn border'>
                     <img src={logo} width='50px' height='50px' alt="" />
                 </button>
             </div>

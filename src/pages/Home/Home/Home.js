@@ -11,7 +11,7 @@ const Home = () => {
                     <div className="col-lg-6 d-flex align-items-center">
                         <div>
                             <h2 className='mb-3'>Why do you have Cupping Therapy?</h2>
-                            <p style={{ fontSize: '17px' }}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex, animi error tempore consectetur eos explicabo at aliquam quasi non pariatur, adipisci ad placeat est, aliquid reprehenderit dicta iure soluta. Architecto, quo placeat. A, ipsa quas tempore laboriosam quidem odit dignissimos illo libero asperiores. Quam ullam atque earum nesciunt ratione. Fugiat?</p>
+                            <p style={{ fontSize: '17px' }}>Cupping therapy is an ancient form of alternative medicine in which a therapist puts special cups on your skin for a few minutes to create suction. People get it for many purposes, including to help with pain, inflammation, blood flow, relaxation and well-being, and as a type of deep-tissue massage...</p>
                             <button className='btn btn-primary'>Read More</button>
                         </div>
                     </div>

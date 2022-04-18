@@ -21,9 +21,6 @@ const Header = () => {
                             <Link className='nav-item' to='/about'>About</Link>
                         </Nav>
                         <Nav>
-                            <div className='d-flex align-items-center mx-2'>
-                                <span>{user && user.displayName}</span>
-                            </div>
                             {
                                 !user ? <Link className='nav-item' to='/login'>Login</Link> : <div>
                                     <button onClick={() => signOut(auth)} className='btn btn-primary'>Sign out</button>

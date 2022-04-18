@@ -4,20 +4,16 @@ import { useSignInWithEmailAndPassword, useSignInWithGoogle } from 'react-fireba
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import logo from '../../images/google-logo.png';
 import './Login.css';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 const Login = () => {
     // previous page 
     let navigate = useNavigate();
     let location = useLocation();
     let from = location.state?.from?.pathname || "/";
     // sign in with email and password 
-    const [
-        signInWithEmailAndPassword,
-        user,
-        loading,
-        error,
-    ] = useSignInWithEmailAndPassword(auth);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState(false);
     const handleEmailBlur = event => {
         setEmail(event.target.value);
     }
@@ -26,7 +22,15 @@ const Login = () => {
     }
     const handleSubmit = async event => {
         event.preventDefault();
-        signInWithEmailAndPassword(email, password)
+        signInWithEmailAndPassword(auth, email, password)
+            .then(result => {
+                navigate(from, { replace: true });
+            })
+            .catch(error => {
+                setError(error.message);
+            })
+
+
 
     }
     // sign in with google 
@@ -53,7 +57,7 @@ const Login = () => {
                     <p>Don't you have any account? <Link to='/signup'>create</Link> account</p>
                 </div>
                 <div>
-                    <p className='text-center text-danger'>{error && error.message}</p>
+                    <p className='text-center text-danger'>{error && error}</p>
                 </div>
                 <button type="submit" className="btn btn-primary">Login</button>
                 <div className='d-flex justify-content-center mt-2'>
