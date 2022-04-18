@@ -1,6 +1,6 @@
 import { updateProfile } from 'firebase/auth';
 import React, { useState } from 'react';
-import { useCreateUserWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
+import { useCreateUserWithEmailAndPassword, useSignInWithGoogle, useUpdateProfile } from 'react-firebase-hooks/auth';
 import auth from '../../firebase.init';
 import logo from '../../images/google-logo.png';
 const Signup = () => {
@@ -9,7 +9,7 @@ const Signup = () => {
         user,
         loading,
         error,
-    ] = useCreateUserWithEmailAndPassword(auth);
+    ] = useCreateUserWithEmailAndPassword(auth, { sendEmailVerification: true });
     const [signInWithGoogle, googleLoading, googleRrror] = useSignInWithGoogle(auth);
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
@@ -27,21 +27,18 @@ const Signup = () => {
     const handleConfirmPasswordBlur = event => {
         setConfirmPassword(event.target.value);
     }
-    const updateUserProfile = () => {
-        updateProfile(auth.currentUser, {
-            displayName: 'ariful Islam'
-        })
-    }
-    const handleSubmit = event => {
+    const [updateProfile, updating, error1] = useUpdateProfile(auth);
+    const handleSubmit = async event => {
         event.preventDefault();
-        if (/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/.test(password)) {
-            if (password === confirmPassword) {
-                createUserWithEmailAndPassword(email, password)
-                    .then(() => {
-
-                    })
-            }
+        if (password === confirmPassword) {
+            console.log('hhh');
+            await createUserWithEmailAndPassword(email, password);
+            await updateProfile({ displayName: name })
         }
+        else {
+            console.log('pass not maching')
+        }
+
 
     }
     return (

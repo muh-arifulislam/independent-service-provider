@@ -25,8 +25,7 @@ const Login = () => {
         event.preventDefault();
         signInWithEmailAndPassword(email, password)
             .then(() => {
-                event.target.reset();
-                navigate(from, { replace: true });
+
             })
     }
     const handleGoogleSignIn = () => {
@@ -36,7 +35,7 @@ const Login = () => {
             })
     }
     return (
-        <div className='border w-50 d-flex flex-column jutify-content-center align-items-center p-3 mt-5 mx-auto'>
+        <div className='border w-50 d-flex flex-column jutify-content-center align-items-center p-3 my-5 mx-auto'>
             <form onSubmit={handleSubmit} className='w-100 p-5'>
                 <h2 className='text-center'>Please Login!</h2>
                 <div className="mb-3">
