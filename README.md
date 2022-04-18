@@ -3,7 +3,19 @@
 live website link [https://ash-shifa-hijama-services.netlify.app/](https://ash-shifa-hijama-services.netlify.app/).
 
 ***
-A list of technologies used within the project:
-* [Technology name](https://example.com): Version 12.3 
-* [Technology name](https://example.com): Version 2.34
-* [Library name](https://example.com): Version 1234
+## File structure:
+* Home 
+* Checkout
+* Blog
+* About
+* Login
+* Sign Up
+* 404
+
+***
+## Framework and library:
+* react.js
+* react router
+* firebase
+* firebase hooks
+* react bootstrap
