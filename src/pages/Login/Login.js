@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import auth from '../../firebase.init';
-import { useSignInWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
+import { useSendPasswordResetEmail, useSignInWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import logo from '../../images/google-logo.png';
 import './Login.css';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
+import { async } from '@firebase/util';
+import { Button, Toast } from 'react-bootstrap';
 const Login = () => {
     // previous page 
     let navigate = useNavigate();
@@ -13,7 +15,7 @@ const Login = () => {
     // sign in with email and password 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError] = useState(false);
+    const [error, setError] = useState('');
     const handleEmailBlur = event => {
         setEmail(event.target.value);
     }
@@ -41,8 +43,38 @@ const Login = () => {
                 navigate(from, { replace: true });
             })
     }
+    // password reset 
+    const [displayToast, setDisplayToast] = useState(false);
+    const [sendPasswordResetEmail, sending, error4] = useSendPasswordResetEmail(
+        auth
+    );
+    const handleResetPasswordToast = async () => {
+        setDisplayToast(true)
+    }
+    const handleResetPassword = () => {
+        if (email) {
+            sendPasswordResetEmail(email)
+        }
+        else {
+            setError('enter email then clicked on reset password')
+            setDisplayToast(false);
+        }
+    }
     return (
         <div className='login-container border d-flex flex-column jutify-content-center align-items-center p-3 my-5 mx-auto '>
+            {
+                displayToast && <div>
+                    <Toast>
+                        <Toast.Header>
+                            <strong className="me-auto">Do you want to continue</strong>
+                        </Toast.Header>
+                        <Toast.Body className='text-center'>
+                            <button onClick={handleResetPassword} className='btn btn-primary me-3'>Yes</button>
+                            <button onClick={() => setDisplayToast(false)} className='btn btn-primary'>No</button>
+                        </Toast.Body>
+                    </Toast>
+                </div>
+            }
             <form onSubmit={handleSubmit} className='w-100 p-5'>
                 <h2 className='text-center'>Please Login!</h2>
                 <div className="mb-3">
@@ -55,6 +87,7 @@ const Login = () => {
                 </div>
                 <div>
                     <p>Don't you have any account? <Link to='/signup'>create</Link> account</p>
+                    <p>Forgotten you password? <span onClick={handleResetPasswordToast} className='reset-btn'>reset password</span></p>
                 </div>
                 <div>
                     <p className='text-center text-danger'>{error && error}</p>
